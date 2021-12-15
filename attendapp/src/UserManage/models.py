@@ -69,11 +69,8 @@ class User(AbstractBaseUser):
     wechat_id = models.CharField('微信号', max_length=32, null=True, blank=True)
     phone = models.CharField('电话', max_length=56, null=True, blank=True)
     # 限制登录次数,自动锁定账号
-    if conf.LIMIT_ERROR_LOGIN['is-use']:
-        error_password_count = models.IntegerField("密码输错次数", null=True)
-        forbidden_time = models.DateTimeField("禁止登录时间", null=True)
-    if conf.LIMIT_ERROR_LOGIN['force-change-password']:
-        password_update_time = models.DateTimeField("密码更新时间", null=True)
+    error_password_count = models.IntegerField("密码输错次数", null=True)
+    forbidden_time = models.DateTimeField("禁止登录时间", null=True)
     objects = UserManager()
     USERNAME_FIELD = 'username'
 
