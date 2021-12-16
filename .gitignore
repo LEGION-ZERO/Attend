@@ -127,3 +127,18 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+#IDE
+/.idea/
+/.settings/
+*.pyc
+.project
+.pydevproject
+/build/
+/venv/
+/logs/*
+attentapp/migrations/*.py
+!attendapp/migrations/__init__.py
+
+/vue-element-pqa/*
+/vue-element-pqa
