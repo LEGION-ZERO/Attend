@@ -12,6 +12,7 @@ mysqlclient = "*"
 Django = "==3.1.2"
 PyMySQL = "==0.10.1"
 PyYAML = "==5.3"
+gmssl = "==3.2.1"
 
 [dev-packages]
 

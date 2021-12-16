@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <title>员工考勤主页</title>
+</head>
+<body>
+<form id="login" name="login" method="post" action="{% url 'login' %}">
+    {% csrf_token %}
+    用户名：<br>
+    <input type="text" name="username" value="">
+    <br>
+     密码:<br>
+    <input type="password" name="password" value="">
+    <br>
+    <p><input type="submit" value="登陆"></p>
+</form>
+</body>
+</html>
