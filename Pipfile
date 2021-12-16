@@ -4,14 +4,14 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-django = "==3.1.2"
 djangorestframework = "==3.11.1"
 djangorestframework-jwt = "==1.11.0"
 requests = "==2.22.0"
 django-filter = "==2.3.0"
-pymysql = "==0.10.1"
-pyyaml = "==5.3"
 mysqlclient = "*"
+Django = "==3.1.2"
+PyMySQL = "==0.10.1"
+PyYAML = "==5.3"
 
 [dev-packages]
 
