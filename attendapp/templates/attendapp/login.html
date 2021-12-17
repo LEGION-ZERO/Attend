@@ -3,17 +3,96 @@
 <head>
     <meta charset="UTF-8">
     <title>员工考勤主页</title>
+    <script>
+    function login()
+    {
+        var username=$("username").val();
+        var pawwsord=$("password").val();
+        var publicKey = $("#publicKey").val();
+        var encryptMethod = $("#encryptMethod").val();
+        var encrypt = new JSEncrypt();
+	    if(encryptMethod && encryptMethod=='SM2'){
+		    encrypt=new SM2Encrypt();
+	    }
+	    encrypt.setPublicKey(publicKey);
+        var param={
+		username:userName,
+		password:encrypt.encrypt(password),
+	    };
+
+        $.ajax({
+		url:'/api-token-auth/',
+		type:"post",
+		dataType:"json",
+		data:param,
+		success:function(response){
+			console.log("login success time:"+new Date().toLocaleString())
+			// console.log(response)
+            var sessionStorage = window.sessionStorage;
+            var data = response.data
+			if(response.status == "success" || response.code == 200){
+				for (key in data) {
+					if (key == 'token') {
+						sessionStorage['pqa_token'] = data[key]
+					}else if (key == 'no_operation_expiry_time') {
+						sessionStorage[key] = data[key]
+						sessionStorage['lastTime'] = new Date()
+					}else if (key == 'pop_type') {
+						sessionStorage['isOpen'] = data[key]
+					}else if (key == 'user_role_list') {
+						sessionStorage['correntUser'] = data[key]
+					}else if (key == 'item') {
+						sessionStorage['correntWorkPlace'] = data[key]
+					}else {
+						sessionStorage[key] = data[key]
+					}
+				}
+				console.log(1111)
+				// window.sessionStorage.setItem("is-show-user-group", "true");
+				location.href=baseUrl+"page/homepage";//登录后跳转到首页
+
+			}else if (response.code === 40000) { // 中邮项目：第一次登陆密码或者长时间未修改密码，强制要求用户修改密码
+				if(response.data.hasOwnProperty('token')){
+					sessionStorage.setItem('pqa_temporary_token',response.data['token'])
+				}
+				if(response.hasOwnProperty('msg')){
+					sessionStorage.setItem('pqa_temporary_msg',response.msg)
+				}
+				location.href=baseUrl+"page/changePasswordViewZyxf"; // 跳转到修改密码页面
+			}else{
+				var objtip=$(".login-msg");
+				objtip.removeClass("success");
+				objtip.addClass("error");
+				objtip.text(response.msg || "用户名或密码错误!");
+			}
+		},
+		error:function(response){
+			var objtip=$(".login-msg");
+			objtip.removeClass("success");
+			objtip.addClass("error");
+			objtip.text("用户名或密码错误!");
+		}
+	})
+    }
+    </script>
+
 </head>
 <body>
 <form id="login" name="login" method="post" action="{% url 'login' %}">
     {% csrf_token %}
     用户名：<br>
-    <input type="text" name="username" value="">
+    <input id="username" type="text" name="username" value="">
     <br>
      密码:<br>
-    <input type="password" name="password" value="">
+    <input id="id_password" type="password" name="password" value="">
     <br>
-    <p><input type="submit" value="登陆"></p>
+    <p><input type="submit" value="登陆" onclick="login()"></p>
+    <div>
+    <p>publicKey:{{publicKey}}</p>
+    </div>
+    <div>
+    <p>encryptMethod:{{encryptMethod}}</p>
+    </div>
 </form>
 </body>
 </html>

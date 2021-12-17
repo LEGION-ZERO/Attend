@@ -8,7 +8,7 @@ import datetime
 import base64
 from django.conf import settings as conf
 import logging
-from PQA.common.yml_read_util import get_config_from_file
+from Attend.common.yml_read_util import get_config_from_file
 
 def create_rsa_key():
     # 伪随机数生成器

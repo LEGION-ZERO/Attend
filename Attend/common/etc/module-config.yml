@@ -1,0 +1,30 @@
+#登陆
+login:
+  # 是否需要验证码
+  verification: False
+  # session超时,单位 秒
+  no-operation-expiry-time: 1800
+  # jwt超时(不管操作没操作)
+  jwt-expiry-time: 43200
+  # 登录安全相关设置
+  limit-error-login:
+    # 开启需新增字段:
+    # ALTER TABLE "usermanage_user" ADD COLUMN "error_password_count" integer NULL;
+    # ALTER TABLE "usermanage_user" ADD COLUMN "forbidden_time" timestamp with time zone NULL;
+    is-use: False
+    # 密码输错达到一定次数锁定
+    max-error-login-times: 10
+    # 锁定账号自动解锁等待时间(min)
+    auto-unlock-duration: 60
+    # 强制修改密码:开启需再新增字段:
+    # ALTER TABLE "usermanage_user" ADD COLUMN "password_update_time" timestamp with time zone NULL;
+    force-change-password: False
+    # 强制修改密码的天数
+    force-change-password-days: 90
+    # 登录密码加密相关设置
+    encrypt-password:
+      # 支持RSA 和SM2
+      encrypt-method: RSA
+      # 只有使用SM2加密是才会有效
+      sm2-private-key: 6C5B1CC156AE465EF26973E0E01C466157B81521D448D4F6DE6671A697FCB1B6
+      sm2-public-key: 27AE9564D854B5585BF1662225B9AF566A3877F389AB64B085D52ABE02D988593912F8185ED47FC41574FB6BDB5EE118643CA11FCF655E3336B3E6C36A8F1645

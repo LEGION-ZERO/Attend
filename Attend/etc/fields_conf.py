@@ -18,3 +18,22 @@ LIMIT_ERROR_LOGIN = {
                                                        "login.limit-error-login.force-change-password-days", 90),
 
 }
+
+# 密码加密传输设置
+PASSWORD_ENCRYPT_METHOD = get_config_from_file("module-config.yml", "login.encrypt-password.encrypt-method", "RSA")
+if PASSWORD_ENCRYPT_METHOD == 'SM2':
+    # django 密码加密方式
+    PASSWORD_HASHERS = (
+        'attendapp.src.Auth.localAuth.password_encrypt_service.SM2PasswordHasher',
+        'django.contrib.auth.hashers.MD5PasswordHasher',
+        'django.contrib.auth.hashers.PBKDF2PasswordHasher',
+        'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
+        'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
+        'django.contrib.auth.hashers.BCryptPasswordHasher',
+        'django.contrib.auth.hashers.SHA1PasswordHasher',
+        'django.contrib.auth.hashers.CryptPasswordHasher',
+    )
+    SM2_KEY = {
+        'publicKey': get_config_from_file("module-config.yml", "login.encrypt-password.sm2-public-key", ""),
+        'privateKey': get_config_from_file("module-config.yml", "login.encrypt-password.sm2-private-key", "")
+    }
