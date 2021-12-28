@@ -32,7 +32,7 @@ class Role(models.Model):
 # 部门
 class Department(models.Model):
     name = models.CharField('部门名称', max_length=56)
-    id_delete = models.BooleanField('是否被删除', default=False)
+    is_delete = models.BooleanField('是否被删除', default=False)
 
     class Meta:
         db_table = 'department'
@@ -66,13 +66,15 @@ class User(AbstractBaseUser):
                                    'This value may contain only letters, numbers '
                                    'and @/./+/-/_ characters.'), 'invalid'),
     ], max_length=256, blank=True, null=True)
-    wechat_id = models.CharField('微信号', max_length=32, null=True, blank=True)
+    wechat_id = models.CharField('微信号', max_length=32, null=True, blank=True, unique=True)
     phone = models.CharField('电话', max_length=56, null=True, blank=True)
     # 限制登录次数,自动锁定账号
-    error_password_count = models.IntegerField("密码输错次数", null=True)
-    forbidden_time = models.DateTimeField("禁止登录时间", null=True)
+    error_password_count = models.IntegerField("密码输错次数", blank=True, null=True)
+    forbidden_time = models.DateTimeField("禁止登录时间", blank=True, null=True)
     objects = UserManager()
     USERNAME_FIELD = 'username'
 
     class Meta:
         db_table = 'usermanage_user'
+
+

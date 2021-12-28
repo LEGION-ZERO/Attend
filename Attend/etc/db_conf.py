@@ -38,7 +38,7 @@ if dj_db_conn_pool_conf["is_use_pool"]:
 DATABASES = {
     'default': {
         'ENGINE': db_engine,
-        'USER': db_conf['username'],# root
+        'USER': db_conf['username'],  # root
         'PASSWORD': db_conf['password'],  # root
         'NAME': db_conf['db-name'],  # mysql
         'HOST': db_conf['host'],  # 127.0.0.1

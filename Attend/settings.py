@@ -113,6 +113,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'attendapp', 'static')
+
 # 数据库配置、rest framework配置从etc中导入
 from .etc.db_conf import *
 from .etc.rest_conf import *
